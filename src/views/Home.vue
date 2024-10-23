@@ -3,7 +3,7 @@
       <TodoList />
       <button class="add-todo" @click="addTodo">+</button>
     </div>
-  </template>
+</template>
   
   <script>
   import TodoList from '@/components/TodoList.vue';

@@ -35,7 +35,7 @@
   .todo-item {
     display: flex;
     justify-content: space-between;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     border-radius: 10px;
     padding: 20px;
     margin: 10px 0;
@@ -45,9 +45,18 @@
     background: none;
     border: none;
     margin-left: 10px;
+    transition: transform 0.2s ease-in-out;
   }
+
+  .actions button:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+    transition: transform 0.2s ease-in-out;
+  }
+
   .actions img {
     width: 20px;
   }
+
   </style>
   

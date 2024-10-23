@@ -9,7 +9,7 @@
   
   <style scoped>
   .header {
-    background-color: #b6b1d9;
+    background-color: #9395D3;
     padding: 20px;
     display: flex;
     justify-content: space-between;
@@ -18,6 +18,11 @@
   }
   .calendar-button img {
     width: 24px;
+  }
+
+  .calendar-button {
+    background: none;
+    border: none;
   }
   </style>
   
