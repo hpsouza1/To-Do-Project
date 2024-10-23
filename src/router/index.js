@@ -1,27 +1,17 @@
-// src/router/index.js
 import Vue from 'vue';
-import VueRouter from 'vue-router';
-import HomeView from '@/views/HomeView.vue';
-import RepositoryDetailsView from '@/views/RepositoryDetailsView.vue';
-
-Vue.use(VueRouter);
+import Router from 'vue-router';
+import Home from '../views/Home.vue';
+import TodoDetails from '../views/TodoDetails.vue';
+Vue.use(Router);
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView,
-  },
-  {
-    path: '/repository/:id',
-    name: 'repositoryDetails',
-    component: RepositoryDetailsView,
-  },
+  { path: '/', name: 'Home', component: Home },
+  { path: '/todo/:id', name: 'TodoDetails', component: TodoDetails }
 ];
 
-const router = new VueRouter({
+const router = new Router({
   mode: 'history',
-  routes,
+  routes
 });
 
 export default router;
