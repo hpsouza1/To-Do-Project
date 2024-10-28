@@ -15,9 +15,10 @@
     justify-content: space-between;
     align-items: center;
     color: white;
+    margin-bottom: 30px;
   }
   .calendar-button img {
-    width: 24px;
+    width: 34px;
   }
 
   .calendar-button {

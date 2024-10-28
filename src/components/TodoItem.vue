@@ -36,9 +36,10 @@
     display: flex;
     justify-content: space-between;
     background-color: rgb(255, 255, 255);
-    border-radius: 10px;
+    border-radius: 15px;
     padding: 20px;
-    margin: 10px 0;
+    margin: 10px;
+    margin-bottom: 25px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   .actions button {
@@ -55,7 +56,18 @@
   }
 
   .actions img {
-    width: 20px;
+    width: 15px;
+    margin-top: 100%;
+  }
+
+  h2{
+    color: #9395D3;
+    font-size: 13px;
+    font-weight: bold;
+  }
+
+  p{
+    font-size: 10px;
   }
 
   </style>
