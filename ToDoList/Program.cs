@@ -2,6 +2,8 @@ using WebApplication1.Repositories.Interfaces;
 using WebApplication1.Repositories;
 using WebApplication1.Services.Interfaces;
 using WebApplication1.Services;
+using WebApplication1.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,9 @@ builder.WebHost.ConfigureKestrel(options =>
         httpsOptions.SslProtocols = System.Security.Authentication.SslProtocols.Tls12 | System.Security.Authentication.SslProtocols.Tls13;
     });
 });
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<ITarefaRepository, TarefaRepository>();
 builder.Services.AddScoped<ITarefaService, TarefaService>();
