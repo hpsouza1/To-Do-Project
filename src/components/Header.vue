@@ -1,29 +1,52 @@
+<!-- src/components/Header.vue -->
 <template>
-    <header class="header">
-      <h1>TODO APP</h1>
-      <button class="calendar-button">
-        <img src="../assets/calendar-icon.png" alt="Calendar" />
-      </button>
-    </header>
-  </template>
-  
-  <style scoped>
-  .header {
-    background-color: #9395D3;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: white;
-    margin-bottom: 30px;
-  }
-  .calendar-button img {
-    width: 34px;
-  }
+  <header class="header">
+    <h1>{{ title }}</h1>
+    <button v-if="showBackButton" @click="$router.back()" class="back-button">←</button>
+  </header>
+</template>
 
-  .calendar-button {
-    background: none;
-    border: none;
+<script>
+export default {
+  props: {
+    title: {
+      type: String,
+      default: 'TODO APP'
+    },
+    showBackButton: {
+      type: Boolean,
+      default: false
+    }
   }
-  </style>
-  
+};
+</script>
+
+<style scoped>
+.header {
+  background-color: #9395D3;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  margin-bottom: 30px;
+}
+
+.calendar-button img {
+  width: 34px;
+}
+
+.calendar-button {
+  background: none;
+  border: none;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  margin-right: 10px;
+}
+</style>

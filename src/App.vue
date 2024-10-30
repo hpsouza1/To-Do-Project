@@ -1,18 +1,11 @@
 <template>
   <div id="app">
-    <Header />
     <router-view />
   </div>
 </template>
 
 <script>
-import Header from './components/Header.vue';
-
-export default {
-  components: {
-    Header
-  }
-};
+export default {};
 </script>
 
 <style>
@@ -23,7 +16,5 @@ body {
   background-color: #D6D7EF;
   width: 100%;
   height: 100vh;
-
 }
 </style>
-
