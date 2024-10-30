@@ -1,38 +1,47 @@
 <template>
-    <div class="todo-item">
-      <div>
-        <h2>{{ todo.title }}</h2>
-        <p>{{ todo.subtitle }}</p>
-      </div>
-      <div class="actions">
-        <button @click="editTodo"><img src="../assets/edit-icon.png" alt="Edit" /></button>
-        <button @click="deleteTodo"><img src="../assets/delete-icon.png" alt="Delete" /></button>
-        <button @click="completeTodo"><img src="../assets/complete-icon.png" alt="Complete" /></button>
-      </div>
+  <div class="todo-item">
+    <div>
+      <h2>{{ todo.Titulo }}</h2>
+      <p>{{ todo.Descricao }}</p>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    props: {
-      todo: Object
+    <div class="actions">
+      <button @click="editTodo"><img src="../assets/edit-icon.png" alt="Edit" /></button>
+      <button @click="deleteTodo"><img src="../assets/delete-icon.png" alt="Delete" /></button>
+      <button @click="completeTodo"><img src="../assets/complete-icon.png" alt="Complete" /></button>
+    </div>
+  </div>
+</template>
+
+<script>
+import api from '../api/api'; // Certifique-se de que o caminho esteja correto
+
+export default {
+  props: {
+    todo: Object
+  },
+  methods: {
+    editTodo() {
+      this.$emit('edit', this.todo);
     },
-    methods: {
-      editTodo() {
-        this.$emit('edit', this.todo);
-      },
-      deleteTodo() {
-        this.$emit('delete', this.todo);
-      },
-      completeTodo() {
-        this.$emit('complete', this.todo);
+    async deleteTodo() {
+      try {
+        // Chama a função delete para remover a tarefa do backend
+        await api.delete(`/${this.todo.id}`);
+        // Emite um evento para que o componente pai saiba que a tarefa foi deletada
+        this.$emit('delete', this.todo.id);
+      } catch (error) {
+        console.error("Erro ao deletar a tarefa:", error);
       }
+    },
+    completeTodo() {
+      this.$emit('complete', this.todo);
     }
-  };
-  </script>
-  
-  <style scoped>
-  .todo-item {
+  }
+};
+</script>
+
+<style scoped>
+ .todo-item {
     display: flex;
     justify-content: space-between;
     background-color: rgb(255, 255, 255);
@@ -69,6 +78,4 @@
   p{
     font-size: 10px;
   }
-
-  </style>
-  
+</style>

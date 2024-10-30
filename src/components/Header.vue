@@ -1,8 +1,8 @@
 <!-- src/components/Header.vue -->
 <template>
   <header class="header">
-    <h1>{{ title }}</h1>
     <button v-if="showBackButton" @click="$router.back()" class="back-button">←</button>
+    <h1>{{ title }}</h1>
   </header>
 </template>
 
@@ -26,7 +26,6 @@ export default {
   background-color: #9395D3;
   padding: 20px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   color: white;
   margin-bottom: 30px;
@@ -47,6 +46,6 @@ export default {
   font-size: 24px;
   color: white;
   cursor: pointer;
-  margin-right: 10px;
+  margin-right: 50px;
 }
 </style>

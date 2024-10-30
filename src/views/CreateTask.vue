@@ -88,12 +88,4 @@ button:hover {
   background-color: #8c83c1;
 }
 
-body {
-  font-family: 'Jost', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #D6D7EF;
-  width: 100%;
-  height: 100vh;
-}
 </style>

@@ -1,43 +1,55 @@
+<!-- src/components/TodoList.vue -->
 <template>
-    <div class="todo-list">
-      <TodoItem 
-        v-for="todo in todos" 
-        :key="todo.id" 
-        :todo="todo" 
-        @edit="editTodo" 
-        @delete="deleteTodo" 
-        @complete="completeTodo" 
-      />
-    </div>
-  </template>
-  
-  <script>
-  import TodoItem from './TodoItem.vue';
-  
-  export default {
-    components: {
-      TodoItem
+  <div class="todo-list">
+    <TodoItem 
+      v-for="todo in todos" 
+      :key="todo.id" 
+      :todo="todo" 
+      @edit="editTodo" 
+      @delete="deleteTodo" 
+      @complete="completeTodo" 
+    />
+  </div>
+</template>
+
+<script>
+import TodoItem from './TodoItem.vue';
+import api from '../api/api'; // Certifique-se de que o caminho está correto
+
+export default {
+  components: {
+    TodoItem
+  },
+  data() {
+    return {
+      todos: [] // Inicializa como um array vazio
+    };
+  },
+  methods: {
+    editTodo(todo) {
+      console.log('Edit:', todo);
     },
-    data() {
-      return {
-        todos: [
-          { id: 1, title: 'TODO TITLE', subtitle: 'TODO SUB TITLE' },
-          { id: 2, title: 'TODO TITLE', subtitle: 'TODO SUB TITLE' },
-          { id: 3, title: 'TODO TITLE', subtitle: 'TODO SUB TITLE' }
-        ]
-      };
-    },
-    methods: {
-      editTodo(todo) {
-        console.log('Edit:', todo);
-      },
-      deleteTodo(todo) {
-        this.todos = this.todos.filter(t => t.id !== todo.id);
-      },
-      completeTodo(todo) {
-        console.log('Complete:', todo);
+    async deleteTodo(id) {
+      try {
+        await api.delete(`/tarefa/${id}`); // Rota ajustada para incluir "/tarefa"
+        this.todos = this.todos.filter(t => t.id !== id);
+      } catch (error) {
+        console.error("Erro ao deletar a tarefa:", error);
       }
+    },
+    completeTodo(todo) {
+      console.log('Complete:', todo);
     }
-  };
-  </script>
+  },
+  async mounted() {
+    try {
+      const response = await api.get('/tarefa'); // Ajustado para garantir a rota correta
+      console.log("Response data:", response.data); // Adicionado para inspecionar o retorno da API 
+      this.todos = response.data; // Atualiza a lista de tarefas com os dados da API
+    } catch (error) {
+      console.error("Erro ao carregar as tarefas:", error);
+    }
+  }
+};
+</script>
   
