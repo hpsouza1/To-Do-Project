@@ -4,9 +4,9 @@
     <Header title="Add Task" :showBackButton="true" />
     <div class="conteudo">
       <form @submit.prevent="addTask">
-        <input type="text" id="title" v-model="title" placeholder="Title" required />
+        <input type="text" id="titulo" v-model="titulo" placeholder="Title" required />
     
-        <input id="description" v-model="description" placeholder="Detail" required/>
+        <input id="descricao" v-model="descricao" placeholder="Detail" required/>
         
         <button type="submit">ADD</button>
       </form>
@@ -16,6 +16,7 @@
 
 <script>
 import Header from '@/components/Header.vue'
+import api from '../api/api' // Certifique-se de que o caminho está correto
 
 export default {
   components: {
@@ -23,16 +24,24 @@ export default {
   },
   data() {
     return {
-      title: '',
-      description: ''
+      titulo: '',
+      descricao: ''
     };
   },
   methods: {
-    addTask() {
-      const newTask = { title: this.title, description: this.description };
-      // Aqui, envie `newTask` para o backend usando Axios
-      console.log('Nova Tarefa:', newTask);
-      this.$router.push('/'); // Redireciona para a home
+    async addTask() {
+      const newTask = { titulo: this.titulo, descricao: this.descricao }; // Altere as chaves se o backend esperar outro nome
+      try {
+        // Envia a nova tarefa para o backend
+        const response = await api.post('/tarefa', newTask);
+        console.log('Tarefa criada:', response.data); // Log para conferir o retorno da API
+
+        // Redireciona para a página inicial após criar a tarefa
+        this.$router.push('/');
+      } catch (error) {
+        console.error('Erro ao criar tarefa:', error); // Log de erro
+        
+      }
     }
   }
 };
