@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     editTodo() {
-      this.$emit("edit", this.todo);
+    this.$router.push({ path: `/edit-task/${this.todo.id}` });
     },
     async deleteTodo() {
       try {
@@ -36,7 +36,7 @@ export default {
         // Emite um evento para que o componente pai saiba que a tarefa foi deletada
         this.$emit("delete", this.todo.id);
         window.location.reload(); // Recarrega a página para garantir que tudo está atualizado
-        
+
         console.log(`Tentando deletar a tarefa com ID: ${this.todo.id}`);
 
       } catch (error) {

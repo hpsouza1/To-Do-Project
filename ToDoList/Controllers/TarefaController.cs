@@ -41,16 +41,22 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Tarefa tarefaAtualizada)
+        public async Task<IActionResult> UpdateTask(int id, [FromBody] Tarefa updatedTask)
         {
-            var tarefaExistente = _tarefaService.GetById(id);
-            if (tarefaExistente == null)
+            if (id != updatedTask.Id)
             {
-                return NotFound();
+                return BadRequest("ID mismatch.");
             }
-            _tarefaService.Update(tarefaAtualizada);
+
+            var result = await _tarefaService.Update(id, updatedTask);
+            if (!result)
+            {
+                return NotFound("Task not found.");
+            }
+
             return NoContent();
         }
+
 
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
