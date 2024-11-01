@@ -35,6 +35,8 @@ export default {
         await api.delete(`/tarefa/${this.todo.id}`);
         // Emite um evento para que o componente pai saiba que a tarefa foi deletada
         this.$emit("delete", this.todo.id);
+        window.location.reload(); // Recarrega a página para garantir que tudo está atualizado
+        
         console.log(`Tentando deletar a tarefa com ID: ${this.todo.id}`);
 
       } catch (error) {

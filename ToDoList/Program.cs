@@ -43,7 +43,7 @@ builder.WebHost.ConfigureKestrel(options =>
         httpsOptions.SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13;
     });
 });
-
+    
 var app = builder.Build();
 
 // Middlewares

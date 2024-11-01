@@ -34,7 +34,6 @@ export default {
         await api.delete(`/tarefa/${id}`); // Chama o delete no backend
         // Atualiza a lista de tarefas no frontend removendo a tarefa deletada
         this.todos = this.todos.filter((t) => t.id !== id);
-        this.$forceUpdate(); // força o Vue a renderizar novamente
         console.log(`Tentando deletar a tarefa com ID: ${id}`);
 
       } catch (error) {
