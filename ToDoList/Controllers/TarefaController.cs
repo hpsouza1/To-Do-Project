@@ -2,6 +2,9 @@
 using WebApplication1.Models;
 using WebApplication1.Services.Interfaces;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using WebApplication1.Data;
+using System.Threading.Tasks;
 
 namespace WebApplication1.Controllers
 {
@@ -10,10 +13,13 @@ namespace WebApplication1.Controllers
     public class TarefaController : ControllerBase
     {
         private readonly ITarefaService _tarefaService;
+        private readonly AppDbContext _context;
 
-        public TarefaController(ITarefaService tarefaService)
+        // Construtor para injeção de dependência de ITarefaService e AppDbContext
+        public TarefaController(ITarefaService tarefaService, AppDbContext context)
         {
             _tarefaService = tarefaService;
+            _context = context;
         }
 
         [HttpGet]
@@ -57,7 +63,6 @@ namespace WebApplication1.Controllers
             return NoContent();
         }
 
-
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
@@ -69,5 +74,16 @@ namespace WebApplication1.Controllers
             _tarefaService.Delete(id);
             return NoContent();
         }
+
+        [HttpPut("complete/{id}")]
+        public IActionResult CompleteTask(int id)
+        {
+            var success = _tarefaService.CompleteTask(id);
+            if (!success) return NotFound();
+
+            // Retorna uma resposta de sucesso com uma mensagem
+            return Ok(new { success = true, message = "Task completed successfully." });
+        }
+
     }
 }

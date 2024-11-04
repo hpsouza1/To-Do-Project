@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     editTodo() {
-    this.$router.push({ path: `/edit-task/${this.todo.id}` });
+      this.$router.push({ path: `/edit-task/${this.todo.id}` });
     },
     async deleteTodo() {
       try {
@@ -35,19 +35,31 @@ export default {
         await api.delete(`/tarefa/${this.todo.id}`);
         // Emite um evento para que o componente pai saiba que a tarefa foi deletada
         this.$emit("delete", this.todo.id);
-        window.location.reload(); // Recarrega a página para garantir que tudo está atualizado
 
         console.log(`Tentando deletar a tarefa com ID: ${this.todo.id}`);
-
       } catch (error) {
         console.error("Erro ao deletar a tarefa:", error);
-
       }
     },
 
-    completeTodo() {
-      this.$emit("complete", this.todo);
-      
+    async completeTodo() {
+      try {
+        const response = await api.put(`/tarefa/complete/${this.todo.id}`); // Armazena a resposta aqui
+        this.$emit("complete", this.todo);
+
+        console.log(`Tarefa ${this.todo.id} marcada como concluída`);
+        console.log("Resposta da API:", response.data);
+        console.log("Tipo de dado:", typeof response.data);
+        console.log(
+          "Estrutura dos dados:",
+          JSON.stringify(response.data, null, 2)
+        );
+
+        this.$router.push({ path: `/completed-tasks` }); // Ajuste o caminho conforme necessário
+
+      } catch (error) {
+        console.error("Erro ao completar a tarefa:", error);
+      }
     },
   },
 };

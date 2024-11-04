@@ -7,7 +7,7 @@
       :todo="todo"
       @edit="editTodo"
       @delete="deleteTodo"
-      @complete="completeTodo"
+      @complete="moveToCompleted"
     />
   </div>
 </template>
@@ -41,9 +41,11 @@ export default {
 
       }
     },
-    completeTodo(todo) {
-      console.log("Complete:", todo);
-
+    moveToCompleted(completedTodo) {
+      // Atualiza a lista para esconder a tarefa concluída
+      this.todos = this.todos.filter(todo => todo.id !== completedTodo.id);
+      // Redireciona para a página de tarefas concluídas
+      this.$router.push('/CompletedTasks');
     },
   },
   async mounted() {
@@ -52,7 +54,10 @@ export default {
       console.log("Response data:", response.data); // Adicionado para inspecionar o retorno da API
 
       this.todos = response.data; // Atualiza a lista de tarefas com os dados da API
-      console.log(this.todos); // Inspecionar o array de tarefas
+      console.log("Tarefas carregadas:", this.todos);
+      console.log("Resposta da API:", response.data);
+      console.log("Tipo de dado:", typeof response.data);
+      console.log("Estrutura dos dados:", JSON.stringify(response.data, null, 2));
 
     } catch (error) {
       console.error("Erro ao carregar as tarefas:", error);

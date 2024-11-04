@@ -49,6 +49,18 @@ namespace WebApplication1.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public bool CompleteTask(int id)
+        {
+            var tarefa = _context.Tarefas.Find(id);
+            if (tarefa == null) return false;
+
+            tarefa.Completed = true;
+            _context.SaveChanges();
+            return true;
+        }
+
+
     }
 
 }
