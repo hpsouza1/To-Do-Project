@@ -9,20 +9,37 @@
       @delete="deleteTodo"
       @complete="moveToCompleted"
     />
+    <Modal 
+      v-if="showCompletedModal" 
+      :visible="showCompletedModal" 
+      message="Tarefa concluída com sucesso!" 
+      @close="showCompletedModal = false"
+    />
+    <Modal 
+      v-if="showDeletedModal" 
+      :visible="showDeletedModal" 
+      message="Tarefa deletada com sucesso!" 
+      @close="showDeletedModal = false"
+    />
   </div>
 </template>
 
 <script>
 import TodoItem from "./TodoItem.vue";
-import api from "../api/api"; // Certifique-se de que o caminho está correto
+import Modal from "./Modal.vue";
+import api from "../api/api"; 
+
 
 export default {
   components: {
     TodoItem,
+    Modal,
   },
   data() {
     return {
       todos: [], // Inicializa como um array vazio
+      showCompletedModal: false,
+      showDeletedModal: false,
     };
   },
   methods: {
@@ -31,23 +48,39 @@ export default {
     },
     async deleteTodo(id) {
       try {
-        await api.delete(`/tarefa/${id}`); // Chama o delete no backend
-        // Atualiza a lista de tarefas no frontend removendo a tarefa deletada
+        await api.delete(`/tarefa/${id}`);
         this.todos = this.todos.filter((t) => t.id !== id);
         console.log(`Tentando deletar a tarefa com ID: ${id}`);
+        this.showDeletedModal = true;
+        
+        // Adicionando um pequeno atraso para garantir que o modal seja exibido
+        setTimeout(() => {
+          this.showDeletedModal = false; // Oculta o modal após 3 segundos
+        }, 3000); 
 
       } catch (error) {
         console.error("Erro ao deletar a tarefa:", error);
-
       }
     },
-    moveToCompleted(completedTodo) {
-      // Atualiza a lista para esconder a tarefa concluída
-      this.todos = this.todos.filter(todo => todo.id !== completedTodo.id);
-      // Redireciona para a página de tarefas concluídas
-      this.$router.push({ path: `/completed-tasks` }).then(() => {
-          window.location.reload();
-        });
+    async moveToCompleted(completedTodo) {
+      try {
+        await api.put(`/tarefa/complete/${completedTodo.id}`);
+        // Atualiza a lista para esconder a tarefa concluída
+        this.todos = this.todos.filter(todo => todo.id !== completedTodo.id);
+        
+        this.showCompletedModal = true; // Mostra o modal de tarefa concluída
+
+        // Adicionando um pequeno atraso para garantir que o modal seja exibido
+        setTimeout(() => {
+          this.showCompletedModal = false; // Oculta o modal após 3 segundos
+          this.$router.push({ path: `/completed-tasks` }).then(() => {
+            window.location.reload();
+          });
+        }, 3000); 
+
+      } catch (error) {
+        console.error("Erro ao completar a tarefa:", error);
+      }
     },
   },
   async mounted() {
@@ -67,3 +100,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.todo-list {
+  position: relative; /* Necessário para o modal ser posicionado corretamente */
+}
+</style>
