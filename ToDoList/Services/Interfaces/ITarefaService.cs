@@ -11,5 +11,7 @@ namespace WebApplication1.Services.Interfaces
         bool Delete(int id);             // Retorno ajustado para bool
         Task<bool> Update(int id, Tarefa updatedTask); // Assinatura do método de atualização
         bool CompleteTask(int id); // Adiciona o método CompleteTask
+        List<Tarefa> GetCompletedTasks();
+
     }
 }

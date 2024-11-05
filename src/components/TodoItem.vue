@@ -4,7 +4,8 @@
       <h2>{{ todo.titulo }}</h2>
       <p>{{ todo.descricao }}</p>
     </div>
-    <div class="actions">
+    <!-- Mostra as ações apenas se não estiver em CompletedTasks -->
+    <div class="actions" v-if="!isCompletedView">
       <button @click="editTodo">
         <img src="../assets/edit-icon.png" alt="Edit" />
       </button>
@@ -24,6 +25,10 @@ import api from "../api/api"; // Certifique-se de que o caminho esteja correto
 export default {
   props: {
     todo: Object,
+    isCompletedView: {
+      type: Boolean,
+      default: false
+    }
   },
   methods: {
     editTodo() {
@@ -31,37 +36,26 @@ export default {
     },
     async deleteTodo() {
       try {
-        // Adiciona a rota correta ao deletar
         await api.delete(`/tarefa/${this.todo.id}`);
-        // Emite um evento para que o componente pai saiba que a tarefa foi deletada
         this.$emit("delete", this.todo.id);
-
-        console.log(`Tentando deletar a tarefa com ID: ${this.todo.id}`);
+        window.location.reload();
       } catch (error) {
         console.error("Erro ao deletar a tarefa:", error);
       }
     },
-
     async completeTodo() {
       try {
-        const response = await api.put(`/tarefa/complete/${this.todo.id}`); // Armazena a resposta aqui
+        await api.put(`/tarefa/complete/${this.todo.id}`);
         this.$emit("complete", this.todo);
-
-        console.log(`Tarefa ${this.todo.id} marcada como concluída`);
-        console.log("Resposta da API:", response.data);
-        console.log("Tipo de dado:", typeof response.data);
-        console.log(
-          "Estrutura dos dados:",
-          JSON.stringify(response.data, null, 2)
-        );
-
-        this.$router.push({ path: `/completed-tasks` }); // Ajuste o caminho conforme necessário
-
+        
+        this.$router.push({ path: `/completed-tasks` }).then(() => {
+          window.location.reload();
+        });
       } catch (error) {
         console.error("Erro ao completar a tarefa:", error);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

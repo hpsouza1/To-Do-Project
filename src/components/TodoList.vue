@@ -45,7 +45,9 @@ export default {
       // Atualiza a lista para esconder a tarefa concluída
       this.todos = this.todos.filter(todo => todo.id !== completedTodo.id);
       // Redireciona para a página de tarefas concluídas
-      this.$router.push('/CompletedTasks');
+      this.$router.push({ path: `/completed-tasks` }).then(() => {
+          window.location.reload();
+        });
     },
   },
   async mounted() {
@@ -53,7 +55,7 @@ export default {
       const response = await api.get("/tarefa"); // Ajustado para garantir a rota correta
       console.log("Response data:", response.data); // Adicionado para inspecionar o retorno da API
 
-      this.todos = response.data; // Atualiza a lista de tarefas com os dados da API
+      this.todos = response.data.filter(todo => !todo.completed); // Filtra para mostrar apenas as não concluídas
       console.log("Tarefas carregadas:", this.todos);
       console.log("Resposta da API:", response.data);
       console.log("Tipo de dado:", typeof response.data);

@@ -60,6 +60,13 @@ namespace WebApplication1.Services
             return true;
         }
 
+        public List<Tarefa> GetCompletedTasks()
+        {
+            // Filtra tarefas com status "concluído"
+            return _context.Tarefas.Where(t => t.Completed == true).ToList();
+        }
+
+
 
     }
 

@@ -85,5 +85,16 @@ namespace WebApplication1.Controllers
             return Ok(new { success = true, message = "Task completed successfully." });
         }
 
+        [HttpGet("completed")]
+        public ActionResult<List<Tarefa>> GetCompletedTasks()
+        {
+            var completedTasks = _tarefaService.GetCompletedTasks();
+            if (completedTasks == null || completedTasks.Count == 0)
+            {
+                return Ok(new List<Tarefa>()); // Retorna uma lista vazia se não houver tarefas concluídas
+            }
+            return Ok(completedTasks);
+        }
+
     }
 }
