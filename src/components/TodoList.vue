@@ -37,7 +37,7 @@ export default {
   },
   data() {
     return {
-      todos: [], // Inicializa como um array vazio
+      todos: [], 
       showCompletedModal: false,
       showDeletedModal: false,
     };
@@ -65,7 +65,7 @@ export default {
     async moveToCompleted(completedTodo) {
       try {
         await api.put(`/tarefa/complete/${completedTodo.id}`);
-        // Atualiza a lista para esconder a tarefa concluída
+    
         this.todos = this.todos.filter(todo => todo.id !== completedTodo.id);
         
         this.showCompletedModal = true; // Mostra o modal de tarefa concluída
@@ -103,6 +103,6 @@ export default {
 
 <style scoped>
 .todo-list {
-  position: relative; /* Necessário para o modal ser posicionado corretamente */
+  position: relative; 
 }
 </style>

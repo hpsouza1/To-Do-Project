@@ -8,9 +8,9 @@ namespace WebApplication1.Services.Interfaces
         List<Tarefa> GetAll();
         Tarefa GetById(int id);
         void Add(Tarefa tarefa);
-        bool Delete(int id);             // Retorno ajustado para bool
-        Task<bool> Update(int id, Tarefa updatedTask); // Assinatura do método de atualização
-        bool CompleteTask(int id); // Adiciona o método CompleteTask
+        bool Delete(int id);           
+        Task<bool> Update(int id, Tarefa updatedTask); 
+        bool CompleteTask(int id); 
         List<Tarefa> GetCompletedTasks();
 
     }

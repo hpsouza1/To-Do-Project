@@ -40,6 +40,7 @@ export default {
 <style scoped>
 .completed-tasks {
   overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .conteudo {
